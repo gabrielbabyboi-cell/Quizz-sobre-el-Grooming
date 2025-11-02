@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Quiz: Detectives Digitales - Grooming</title>
+<style>
+body { font-family: Arial, sans-serif; background-color: #F0F8FF; color: #282828; margin: 20px; }
+h1 { color: #191970; text-align: center; }
+.quiz-container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 2px 2px 10px rgba(0,0,0,0.1);}
+.question { margin: 15px 0; padding: 10px; border-radius: 5px; }
+.correct { background-color: #c8e6c9; } /* verde claro */
+.incorrect { background-color: #ffcdd2; } /* rojo claro */
+button { background-color: #191970; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;}
+button:hover { background-color: #4169E1; }
+.feedback { margin-top: 10px; font-weight: bold; }
+.legend { margin-bottom: 15px; font-weight: bold; }
+.legend span { display: inline-block; padding: 5px 10px; border-radius: 3px; margin-right: 10px; color: #000; }
+.correct-legend { background-color: #c8e6c9; }
+.incorrect-legend { background-color: #ffcdd2; }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+<h1>Detectives Digitales: Grooming</h1>
+
+<div class="legend">
+  <span class="correct-legend">Verde = Correcto</span>
+  <span class="incorrect-legend">Rojo = Incorrecto</span>
+</div>
+
+<div id="quiz"></div>
+<button onclick="checkAnswers()">Enviar respuestas</button>
+<div id="result"></div>
+</div>
+
+<script>
+const questions = [
+{
+q: "1. Un desconocido te agrega en internet y te pide tu número de teléfono. ¿Qué deberías hacer?",
+options: ["Dar tu número", "Ignorarlo y contárselo a un adulto", "Bloquearlo y no decir nada"],
+answer: 1
+},
+{
+q: "2. ¿Qué es el grooming?",
+options: ["Una forma de acoso sexual en línea dirigida a menores", "Un juego en internet", "Una técnica de estudio"],
+answer: 0
+},
+{
+q: "3. Verdadero o Falso: Los agresores de grooming siempre piden fotos íntimas de inmediato.",
+options: ["Verdadero", "Falso"],
+answer: 1
+},
+{
+q: "4. Señal de advertencia de grooming:",
+options: ["Tu amigo te invita a jugar un juego", "Recibes mensajes extraños de alguien que no conoces", "Alguien te da un regalo de cumpleaños"],
+answer: 1
+},
+{
+q: "5. Si alguien te está acosando en línea, ¿cuál es la mejor acción?",
+options: ["Ignorarlo y no decir nada", "Responder y decirle que pare", "Guardar evidencia y contárselo a un adulto"],
+answer: 2
+},
+{
+q: "6. El grooming puede ocurrir en:",
+options: ["Solo en redes sociales", "Cualquier plataforma digital", "Solo en videojuegos"],
+answer: 1
+},
+{
+q: "7. Qué hacer si eres testigo de grooming:",
+options: ["Guardar silencio", "Reportar y apoyar a la víctima", "Participar para investigar"],
+answer: 1
+},
+{
+q: "8. Verdadero o Falso: Compartir fotos íntimas con desconocidos nunca es seguro.",
+options: ["Verdadero", "Falso"],
+answer: 0
+},
+{
+q: "9. Cómo ayudan los adultos a prevenir grooming:",
+options: ["Educando sobre riesgos digitales", "No supervisando la actividad digital", "Ignorando las redes sociales"],
+answer: 0
+},
+{
+q: "10. Qué actitud es importante frente a una víctima:",
+options: ["Juzgar su comportamiento", "Escuchar y apoyar sin culpar", "Obligarla a denunciar"],
+answer: 1
+}
+];
+
+const quizDiv = document.getElementById('quiz');
+questions.forEach((q, i) => {
+  const qDiv = document.createElement('div');
+  qDiv.className = "question";
+  let html = `<p><strong>${q.q}</strong></p>`;
+  q.options.forEach((opt, j) => {
+    html += `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`;
+  });
+  qDiv.innerHTML = html;
+  quizDiv.appendChild(qDiv);
+});
+
+function checkAnswers() {
+  let score = 0;
+  questions.forEach((q, i) => {
+    const qDiv = quizDiv.children[i];
+    qDiv.classList.remove('correct', 'incorrect');
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if(selected && parseInt(selected.value) === q.answer) { 
+      score++; 
+      qDiv.classList.add('correct');
+    } else {
+      qDiv.classList.add('incorrect');
+    }
+  });
+  const resultDiv = document.getElementById('result');
+  resultDiv.innerHTML = `<p class="feedback">Has acertado ${score} de ${questions.length} preguntas.</p>`;
+}
+</script>
+</body>
+</html>
